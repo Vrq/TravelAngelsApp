@@ -1,5 +1,8 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Dimensions } from 'react-native';
 
+const {height, width} = Dimensions.get('window');
+
+const test = 200;
 var Style = StyleSheet.create({
   rootContainer: {
     flex: 1
@@ -14,7 +17,7 @@ var Style = StyleSheet.create({
     backgroundColor: '#223344'
   },
   questionText: {
-    fontSize: 32,
+    fontSize: 23,
     fontWeight: 'bold',
     color: 'white',
     textAlign: 'center'
@@ -34,8 +37,8 @@ var Style = StyleSheet.create({
     color: '#943473'
   },
   map: {
-    width: 400,
-    height: 300
+    width: width,
+    height: height/2
   }
 })
 
