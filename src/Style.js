@@ -36,9 +36,9 @@ var Style = StyleSheet.create({
   answerButtonHighlighted: {
     color: '#943473'
   },
-  map: {
-    width: width,
-    height: height/2
+  buttonRow: {
+    flex: 1,
+    flexDirection: 'row'
   }
 })
 
