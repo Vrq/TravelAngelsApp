@@ -23,11 +23,19 @@ class TravelAngelsApp extends Component {
         latitude: 50.0647,
         longitude: 19.9170,
         ...zoom
-      }
+      },
+      userPosition: "unknown"
     };
     this.onRegionChange = this.onRegionChange.bind(this);
-
   }
+
+  componentDidMount() {
+    navigator.geolocation.watchPosition(position => {
+      var userPosition = JSON.stringify(position);
+      this.setState({userPosition});
+    });
+  }
+
   render() {
     return (
       <View style={Style.rootContainer}>
@@ -35,7 +43,7 @@ class TravelAngelsApp extends Component {
           region={this.state.region}
           onRegionChange={this.onRegionChange}
           />
-        <View style={Style.questionContainer}><Text style={Style.questionText}>What would you like to do now?</Text></View>
+        <View style={Style.questionContainer}><Text style={Style.questionText}>What would you like to do now? Position: {this.state.userPosition}</Text></View>
         <View style={Style.answerContainer}>
           <View style={Style.buttonRow}>
             <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "1")}>
