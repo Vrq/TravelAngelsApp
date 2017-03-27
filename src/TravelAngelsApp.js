@@ -24,7 +24,7 @@ class TravelAngelsApp extends Component {
         longitude: 19.9170,
         ...zoom
       },
-      userPosition: "dunno"
+      userPositionCoords: "dunno"
     };
     this.onRegionChange = this.onRegionChange.bind(this);
   }
@@ -32,19 +32,24 @@ class TravelAngelsApp extends Component {
   componentWillMount() {
     console.log("willMount")
     navigator.geolocation.watchPosition(position => {
-      var userPosition = JSON.stringify(position);
-      this.setState({userPosition});
-    });
+      var userPositionCoords = position.coords;
+      this.setState({userPositionCoords});
+      console.log("callback")
+    }, (error) => {
+        alert(error)
+    }, {enableHighAccuracy: true, timeout: 5000, maximumAge: 1000});
   }
 
   render() {
+    console.log("render")
     return (
       <View style={Style.rootContainer}>
         <TravelMap
           region={this.state.region}
           onRegionChange={this.onRegionChange}
+          userPositionCoords={this.state.userPositionCoords}
           />
-        <View style={Style.questionContainer}><Text style={Style.questionText}>Position1: {this.state.userPosition}</Text></View>
+        <View style={Style.questionContainer}><Text style={Style.questionText}>Position1: {this.state.userPositionCoords.longitude} {this.state.userPositionCoords.latitude}</Text></View>
         <View style={Style.answerContainer}>
           <View style={Style.buttonRow}>
             <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "1")}>

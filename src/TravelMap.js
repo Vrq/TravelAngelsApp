@@ -2,6 +2,8 @@ import MapView from 'react-native-maps';
 import locations from './dataSource';
 import TravelMapStyle from './TravelMapStyle';
 import React, { Component } from 'react';
+import haversine from 'haversine';
+import round from 'round-to';
 
 export default class TravelMap extends Component {
   constructor(props) {
@@ -23,12 +25,17 @@ export default class TravelMap extends Component {
   }
 
   getMarkersFrom(locations) {
+    let userLocation = {
+      latitude: this.props.userPositionCoords.latitude,
+      longitude: this.props.userPositionCoords.longitude,
+    };
     let markers = [];
+
     for(let loc of locations) {
       let marker = <MapView.Marker
                     coordinate={loc.coordinate}
                     title={loc.title}
-                    description={loc.description+ " Average Price: " + loc.avgPrice}
+                    description={loc.description+ " Distance: " + round(haversine(userLocation, loc.coordinate, {unit: 'meter'}),2)}
                     key={loc.placeID}
                     />;
                   markers.push(marker);
