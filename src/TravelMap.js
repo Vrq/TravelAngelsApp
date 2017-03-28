@@ -4,6 +4,9 @@ import TravelMapStyle from './TravelMapStyle';
 import React, { Component } from 'react';
 import haversine from 'haversine';
 import round from 'round-to';
+import {Dimensions} from 'react-native';
+
+const {height, width} = Dimensions.get('window');
 
 export default class TravelMap extends Component {
   constructor(props) {
@@ -13,7 +16,7 @@ export default class TravelMap extends Component {
 
   render() {
     return(
-      <MapView style={TravelMapStyle.map}
+      <MapView style={{width: width, height: height*this.props.mapHeight}}
         region={this.props.region}
         onRegionChange={this.props.onRegionChange}
         showsUserLocation={true}

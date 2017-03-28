@@ -3,7 +3,8 @@ import {
   AppRegistry,
   Text,
   View,
-  TouchableHighlight } from 'react-native';
+  TouchableHighlight,
+  TouchableWithoutFeedback  } from 'react-native';
 import Style from './Style';
 import MapView from 'react-native-maps';
 import locations from './dataSource';
@@ -25,9 +26,11 @@ class TravelAngelsApp extends Component {
         longitude: 19.9170,
         ...zoom
       },
-      userPositionCoords: "dunno"
+      userPositionCoords: "dunno",
+      mapHeight: 0.382
     };
     this.onRegionChange = this.onRegionChange.bind(this);
+
   }
 
   componentWillMount() {
@@ -49,8 +52,9 @@ class TravelAngelsApp extends Component {
           region={this.state.region}
           onRegionChange={this.onRegionChange}
           userPositionCoords={this.state.userPositionCoords}
+          mapHeight={this.state.mapHeight}
           />
-        <View style={Style.questionContainer}><Text style={Style.questionText}>Position1: {this.state.userPositionCoords.longitude} {this.state.userPositionCoords.latitude}</Text></View>
+        <View style={Style.questionContainer}><TouchableWithoutFeedback onPress={this.onPressQuestion.bind(this)}><View><Text style={Style.questionText}>Position1: {this.state.userPositionCoords.longitude} {this.state.userPositionCoords.latitude}</Text></View></TouchableWithoutFeedback></View>
         <View style={Style.answerContainer}>
           <View style={Style.buttonRow}>
             <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "1")}>
@@ -76,6 +80,15 @@ class TravelAngelsApp extends Component {
 
   onRegionChange(region) {
     this.setState({region})
+  }
+
+  onPressQuestion() {
+    if(this.state.mapHeight < 0.5) {
+      mapHeight = 0.618;
+    } else {
+      mapHeight = 0.382;
+    }
+    this.setState({mapHeight})
   }
 
   onPressButton(input) {
