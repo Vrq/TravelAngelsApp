@@ -8,6 +8,7 @@ import Style from './Style';
 import MapView from 'react-native-maps';
 import locations from './dataSource';
 import TravelMap from './TravelMap';
+import haversine from 'haversine';
 
 const undColor = "#569299"
 const zoom = {
@@ -56,12 +57,12 @@ class TravelAngelsApp extends Component {
               <Text style={Style.answerButtonText}>Eat</Text>
             </TouchableHighlight>
             <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "2")}>
-              <Text style={Style.answerButtonText}>Sleep</Text>
+              <Text style={Style.answerButtonText}>Chillout</Text>
             </TouchableHighlight>
           </View>
           <View style={Style.buttonRow}>
             <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "3")}>
-              <Text style={Style.answerButtonText}>Fun</Text>
+              <Text style={Style.answerButtonText}>Monuments</Text>
             </TouchableHighlight>
             <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "4")}>
               <Text style={Style.answerButtonText}>Back</Text>
@@ -81,17 +82,23 @@ class TravelAngelsApp extends Component {
     let coordinate = {
       latitude: 50.0647,
       longitude: 19.9170,
-    }
+    };
+
+    let userLocation = {
+      latitude: this.state.userPositionCoords.latitude,
+      longitude: this.state.userPositionCoords.longitude,
+    };
+
     let location;
     switch(input) {
       case "1":
-        coordinate = locations.filter(loc => loc.category === "food")[0].coordinate
+        coordinate = locations.filter(loc => loc.category === "food").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
         break;
       case "2":
-        coordinate = locations.filter(loc => loc.category === "chillout")[0].coordinate
+        coordinate = locations.filter(loc => loc.category === "chillout").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
         break;
       case "3":
-        coordinate = locations.filter(loc => loc.category === "monument")[0].coordinate
+        coordinate = locations.filter(loc => loc.category === "monument").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
         break;
       case "4":
         break;
