@@ -8,7 +8,6 @@ var Style = StyleSheet.create({
     flex: 1
   },
   questionContainer: {
-    flex: 2,
     backgroundColor: '#337799',
     justifyContent: 'center',
   },

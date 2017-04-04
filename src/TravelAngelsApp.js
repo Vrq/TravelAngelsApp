@@ -5,6 +5,10 @@ import {
   View,
   TouchableHighlight,
   TouchableWithoutFeedback  } from 'react-native';
+import {
+  CoordinatorLayout,
+  BottomSheetBehavior,
+  FloatingActionButton } from 'react-native-bottom-sheet-behavior';
 import Style from './Style';
 import MapView from 'react-native-maps';
 import locations from './dataSource';
@@ -27,7 +31,7 @@ class TravelAngelsApp extends Component {
         ...zoom
       },
       userPositionCoords: "dunno",
-      mapHeight: 0.382
+      mapHeight: 1
     };
     this.onRegionChange = this.onRegionChange.bind(this);
 
@@ -47,35 +51,51 @@ class TravelAngelsApp extends Component {
   render() {
     console.log("render")
     return (
-      <View style={Style.rootContainer}>
-        <TravelMap
-          region={this.state.region}
-          onRegionChange={this.onRegionChange}
-          userPositionCoords={this.state.userPositionCoords}
-          mapHeight={this.state.mapHeight}
-          />
-        <View style={Style.questionContainer}><TouchableWithoutFeedback onPress={this.onPressQuestion.bind(this)}><View><Text style={Style.questionText}>Position1: {this.state.userPositionCoords.longitude} {this.state.userPositionCoords.latitude}</Text></View></TouchableWithoutFeedback></View>
-        <View style={Style.answerContainer}>
-          <View style={Style.buttonRow}>
-            <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "1")}>
-              <Text style={Style.answerButtonText}>Eat</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "2")}>
-              <Text style={Style.answerButtonText}>Chillout</Text>
-            </TouchableHighlight>
-          </View>
-          <View style={Style.buttonRow}>
-            <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "3")}>
-              <Text style={Style.answerButtonText}>Monuments</Text>
-            </TouchableHighlight>
-            <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "4")}>
-              <Text style={Style.answerButtonText}>Back</Text>
-            </TouchableHighlight>
-          </View>
-
-        </View>
-      </View>
-    );
+          <CoordinatorLayout style={{flex: 1}}>
+            <View style={{ flex: 1, backgroundColor: 'transparent' }}>
+                <TravelMap
+                  region={this.state.region}
+                  onRegionChange={this.onRegionChange}
+                  userPositionCoords={this.state.userPositionCoords}
+                  mapHeight={this.state.mapHeight}
+                  />
+            </View>
+            <BottomSheetBehavior
+              ref='bottomSheet'
+              peekHeight={100}
+              hideable={false}
+              state={BottomSheetBehavior.STATE_COLLAPSED}>
+              <View style={Style.questionContainer}>
+                <View style={{height: 100}}>
+                  <Text style={Style.questionText}>
+                    What would you like to do now? {this.state.userPositionCoords.longitude} {this.state.userPositionCoords.latitude}
+                  </Text>
+                </View>
+                <View style={{height: 200}}>
+                  <View style={Style.answerContainer}>
+                    <View style={Style.buttonRow}>
+                      <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "1")}>
+                        <Text style={Style.answerButtonText}>Eat</Text>
+                      </TouchableHighlight>
+                      <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "2")}>
+                        <Text style={Style.answerButtonText}>Chillout</Text>
+                      </TouchableHighlight>
+                    </View>
+                    <View style={Style.buttonRow}>
+                      <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "3")}>
+                        <Text style={Style.answerButtonText}>Monuments</Text>
+                      </TouchableHighlight>
+                      <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "4")}>
+                        <Text style={Style.answerButtonText}>Back</Text>
+                      </TouchableHighlight>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </BottomSheetBehavior>
+            <FloatingActionButton ref="fab" />
+          </CoordinatorLayout>
+      )
   }
 
   onRegionChange(region) {
