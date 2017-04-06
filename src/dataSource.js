@@ -8,7 +8,8 @@ const locations = [
       longitude: 19.9370,
     },
     avgPrice: 0,
-    category: "monument"
+    mainCategory: "sightseeing",
+    subCategory: "place"
   },
   {
     placeID: "2",
@@ -19,7 +20,8 @@ const locations = [
       longitude: 19.9450,
     },
     avgPrice: 0,
-    category: "monument"
+    mainCategory: "sightseeing",
+    subCategory: "place"
   },
   {
     placeID: "3",
@@ -30,7 +32,8 @@ const locations = [
       longitude: 19.944540,
     },
     avgPrice: 110,
-    category: "food"
+    mainCategory: "food",
+    subCategory: "bar"
   },
   {
     placeID: "4",
@@ -41,7 +44,8 @@ const locations = [
       longitude: 19.935351,
     },
     avgPrice: 20,
-    category: "monument"
+    mainCategory: "sightseeing",
+    subCategory: "monument"
   },
   {
     placeID: "5",
@@ -52,7 +56,7 @@ const locations = [
       longitude: 19.9074263,
     },
     avgPrice: 0,
-    category: "chillout"
+    mainCategory: "chillout"
   }
 ]
 

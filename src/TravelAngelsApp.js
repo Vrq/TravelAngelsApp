@@ -3,12 +3,13 @@ import {
   AppRegistry,
   Text,
   View,
+  ScrollView,
   TouchableHighlight,
   TouchableWithoutFeedback  } from 'react-native';
 import {
   CoordinatorLayout,
   BottomSheetBehavior,
-  FloatingActionButton } from 'react-native-bottom-sheet-behavior';
+  NestedScrollView  } from 'react-native-bottom-sheet-behavior';
 import Style from './Style';
 import MapView from 'react-native-maps';
 import locations from './dataSource';
@@ -62,38 +63,34 @@ class TravelAngelsApp extends Component {
             </View>
             <BottomSheetBehavior
               ref='bottomSheet'
-              peekHeight={100}
+              peekHeight={150}
               hideable={false}
-              state={BottomSheetBehavior.STATE_COLLAPSED}>
+              state={BottomSheetBehavior.STATE_EXPANDED}>
               <View style={Style.questionContainer}>
-                <View style={{height: 100}}>
+                <View>
                   <Text style={Style.questionText}>
                     What would you like to do now? {this.state.userPositionCoords.longitude} {this.state.userPositionCoords.latitude}
                   </Text>
                 </View>
                 <View style={{height: 200}}>
-                  <View style={Style.answerContainer}>
-                    <View style={Style.buttonRow}>
+                  <ScrollView  style={Style.answerContainer} horizontal={true}>
                       <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "1")}>
                         <Text style={Style.answerButtonText}>Eat</Text>
                       </TouchableHighlight>
                       <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "2")}>
-                        <Text style={Style.answerButtonText}>Chillout</Text>
+                        <Text style={Style.answerButtonText}>Have Fun</Text>
                       </TouchableHighlight>
-                    </View>
-                    <View style={Style.buttonRow}>
+
                       <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "3")}>
-                        <Text style={Style.answerButtonText}>Monuments</Text>
+                        <Text style={Style.answerButtonText}>Discover</Text>
                       </TouchableHighlight>
                       <TouchableHighlight style={Style.answerButton} underlayColor={undColor} onPress={this.onPressButton.bind(this, "4")}>
-                        <Text style={Style.answerButtonText}>Back</Text>
+                        <Text style={Style.answerButtonText}>Rest</Text>
                       </TouchableHighlight>
-                    </View>
-                  </View>
+                  </ScrollView >
                 </View>
               </View>
             </BottomSheetBehavior>
-            <FloatingActionButton ref="fab" />
           </CoordinatorLayout>
       )
   }
@@ -125,13 +122,13 @@ class TravelAngelsApp extends Component {
     let location;
     switch(input) {
       case "1":
-        coordinate = locations.filter(loc => loc.category === "food").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
+        coordinate = locations.filter(loc => loc.mainCategory === "food").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
         break;
       case "2":
-        coordinate = locations.filter(loc => loc.category === "chillout").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
+        coordinate = locations.filter(loc => loc.mainCategory === "chillout").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
         break;
       case "3":
-        coordinate = locations.filter(loc => loc.category === "monument").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
+        coordinate = locations.filter(loc => loc.mainCategory === "sightseeing").sort((loc1, loc2) => haversine(userLocation, loc1.coordinate) - haversine(userLocation, loc2.coordinate))[0].coordinate
         break;
       case "4":
         break;

@@ -23,6 +23,8 @@ var Style = StyleSheet.create({
   },
   answerButton: {
     flex: 1,
+    height: height/6,
+    width: width,
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 0.5,
